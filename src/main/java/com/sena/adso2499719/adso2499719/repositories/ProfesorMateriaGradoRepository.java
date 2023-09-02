@@ -1,5 +1,13 @@
 package com.sena.adso2499719.adso2499719.repositories;
 
-public interface ProfesorMateriaGradoRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
+import com.sena.adso2499719.adso2499719.entities.ProfesorMateriaGrado;
+
+@Repository
+public interface ProfesorMateriaGradoRepository extends JpaRepository<ProfesorMateriaGrado, Long>{
+
+	
 }
