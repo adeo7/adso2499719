@@ -5,8 +5,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.sena.adso2499719.adso2499719.dtos.GradoDataTableDto;
 import com.sena.adso2499719.adso2499719.entities.Grado;
 import com.sena.adso2499719.adso2499719.interfaces.IGradoService;
 import com.sena.adso2499719.adso2499719.repositories.GradoRepository;
@@ -52,6 +55,11 @@ public class GradoService implements IGradoService {
 	@Override
 	public Optional<Grado> getById(Long id) {
 		return repository.findById(id);
+	}
+
+	@Override
+	public Page<GradoDataTableDto> getDataTable(Pageable pageable, String textoBusqueda) {
+		return repository.getDataTable(pageable, textoBusqueda);
 	}
 
 }
