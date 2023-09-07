@@ -13,13 +13,13 @@ import com.sena.adso2499719.adso2499719.entities.Profesor;
 
 @Repository
 public interface ProfesorRepository extends JpaRepository<Profesor, Long>{
-	@Query(value="SELECT\r\n"
-			+ "pro.id,\r\n"
-			+ "pro.nombres,\r\n"
-			+ "pro.apellidos,\r\n"
-			+ "esp.nombre as especialidad\r\n"
-			+ "FROM profesores AS pro\r\n"
-			+ "INNER JOIN especialidades AS esp ON esp.id=pro.especialidad_id\r\n"
-			+ "WHERE CONCAT(pro.nombres.pro.apellidos,esp.nombre)LIKE CONCAT('%', :textobu,'%');")
+	@Query(value=" SELECT\r\n "
+			+ " pro.id,\r\n "
+			+ " pro.nombres,\r\n "
+			+ " pro.apellidos,\r\n "
+			+ "  esp.nombre as especialidad\r\n "
+			+ " FROM profesores AS pro\r\n "
+			+ " INNER JOIN especialidades AS esp ON esp.id=pro.especialidad_id\r\n "
+			+ " WHERE CONCAT(pro.nombres.pro.apellidos,esp.nombre)LIKE CONCAT('%', :textobu,'%') ", nativeQuery = true)
 	Page <ProfesoresDataTableDto> getDataTable(Pageable pageable, @Param("textobu" )String textoBusqueda);
 }

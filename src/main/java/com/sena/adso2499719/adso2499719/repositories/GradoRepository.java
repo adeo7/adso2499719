@@ -13,12 +13,11 @@ import com.sena.adso2499719.adso2499719.entities.Grado;
 @Repository
 public interface GradoRepository extends JpaRepository<Grado, Long>{
 @Query(value="SELECT "
-		+ "id"
-		+ "nombre"
-		+ "jornada"
-		+ "salon"
-		+ "FROM grados AS g"
-		+ "WHERE"
-		+ "WHERE CONCAT(g.nombre)LIKE CONCAT('%', :textobu,'%');")
+		+ " id "
+		+ " nombre "
+		+ " jornada "
+		+ " salon "
+		+ " FROM grados AS g "
+		+ " WHERE CONCAT(g.nombre)LIKE CONCAT('%', :textobu,'%') ", nativeQuery = true)
 Page<GradoDataTableDto>getDataTable(Pageable pageable, @Param("textobu" )String textoBusqueda);
 }

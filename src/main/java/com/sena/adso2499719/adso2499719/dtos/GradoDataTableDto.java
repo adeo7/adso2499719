@@ -4,5 +4,5 @@ public interface GradoDataTableDto {
 	Long getid();
 	String getNombre();
 	String getSalon();
-	Boolean GetJornada(); 
+	Boolean getJornada(); 
 }

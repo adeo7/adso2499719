@@ -4,5 +4,5 @@ public interface ProfesoresDataTableDto {
 	Long getId();
 	String getNombres();
 	String getApellidos();
-	String getNombreEspecialidad();
+	String getEspecialidad();
 }

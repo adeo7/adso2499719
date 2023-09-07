@@ -10,13 +10,17 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sena.adso2499719.adso2499719.dtos.ApiResponseDto;
 import com.sena.adso2499719.adso2499719.entities.Especialidad;
 import com.sena.adso2499719.adso2499719.interfaces.IEspecialidadServices;
 
@@ -54,50 +58,78 @@ public class EpecialidadController {
 	
 	
 	@GetMapping
-	public ResponseEntity<?>getAll(){
+	public ResponseEntity<ApiResponseDto<List<Especialidad>>>getAll(){
+		ApiResponseDto<List<Especialidad>> respuesta = new ApiResponseDto<List<Especialidad>>();
+		respuesta.setStatus(true);
+		respuesta.setMessage("Datos obtenidos");
+		respuesta.setData(service.getAll());
 		try {
-			return ResponseEntity.ok(service.getAll());	
+			
+			
+			return ResponseEntity.ok(respuesta);	
 		} catch (Exception e) {
-			return ResponseEntity.internalServerError().body("no se puedo optener los registros");
+			respuesta.setStatus(false);
+			respuesta.setMessage(e.getMessage());
+			respuesta.setData(service.getAll());
+			return ResponseEntity.internalServerError().body(respuesta);
 		}
 	}
 	
 	@GetMapping("{id}")
-	public ResponseEntity<?>getById(@PathVariable Long id){
+	public ResponseEntity<ApiResponseDto<Especialidad>>getById(@PathVariable Long id){
+		ApiResponseDto<Especialidad>respuesta= new ApiResponseDto<Especialidad>();
+		
 		try {
-			return ResponseEntity.ok(service.getById(id));
+			return ResponseEntity.ok(
+					new ApiResponseDto<Especialidad>("Datos obtenidos", true, service.getById(id))
+					);
 		} catch (Exception e) {
-			return ResponseEntity.internalServerError().body("no se puedo optener los registros");
+			return ResponseEntity.internalServerError().body(
+					new ApiResponseDto<Especialidad>(e.getMessage(), false, null)
+					);
 		}
 		
 	}
 	
-
-	public ResponseEntity<?>save(@RequestBody Especialidad especialidad){
+	@PostMapping
+	public ResponseEntity<ApiResponseDto<Especialidad>>save(@RequestBody Especialidad especialidad){
 		try {
-			return ResponseEntity.ok(service.save(especialidad));
+			 service.save(especialidad);
+			return ResponseEntity.ok(
+					new ApiResponseDto<Especialidad>("Datos guardados ", true,null)
+					);
 		} catch (Exception e) {
-			return ResponseEntity.internalServerError().body("no se puedo optener los registros");
+			return ResponseEntity.internalServerError().body(
+					new ApiResponseDto<Especialidad>(e.getMessage(), false,null)
+					);
 		}
 		
 	}
-	
-	public ResponseEntity<?>update(@PathVariable Long id, @RequestBody Especialidad especialidad){
+	@PutMapping("{id}")
+	public  ResponseEntity<ApiResponseDto<Especialidad>>update(@PathVariable Long id, @RequestBody Especialidad especialidad){
 		try {
 			service.update(id, especialidad);
-			return ResponseEntity.ok("Especilidad actualizada");
+			return ResponseEntity.ok(
+					new ApiResponseDto<Especialidad>("Especialidad actualizada", true, null)
+					);
 		} catch (Exception e) {
-			return ResponseEntity.internalServerError().body("no se puedo optener los registros");
+			return ResponseEntity.internalServerError().body(
+					new ApiResponseDto<Especialidad>(e.getMessage(), false, null)
+					);
 		}
 		
 	}
-	
-	public ResponseEntity<?>delete(@PathVariable Long id){
+	@DeleteMapping("{id}")
+	public ResponseEntity<ApiResponseDto<Especialidad>>delete(@PathVariable Long id){
 		try {
 			service.delete(id);
-			return ResponseEntity.ok("Especialidad eliminada");
+			return ResponseEntity.ok(
+					new ApiResponseDto<Especialidad>("Especialidad eliminada ", true, null)
+					);
 		} catch (Exception e) {
-			return ResponseEntity.internalServerError().body("no se puedo optener los registros");
+			return ResponseEntity.internalServerError().body(
+					new ApiResponseDto<Especialidad>(e.getMessage(), false, null)
+					);
 		}
 		
 	}

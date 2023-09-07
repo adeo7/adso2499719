@@ -13,7 +13,7 @@ import com.sena.adso2499719.adso2499719.entities.Especialidad;
 @Repository
 public interface EspecialidadRepository extends JpaRepository<Especialidad, Long>{
 	
-	@Query(value="SELECT * FROM especialidades AS esp"
-			+ "WHERE CONCAT(esp.nombre)LIKE CONCAT('%', :textobu,'%');")
+	@Query(value="SELECT id,nombre FROM especialidades AS esp "
+			+ " WHERE CONCAT(esp.nombre)LIKE CONCAT('%', :textobu,'%') ", nativeQuery = true)
 	Page<EspecialidadDataTableDto>getDataTable(Pageable pageable, @Param("textobu" )String textoBusqueda);
 }

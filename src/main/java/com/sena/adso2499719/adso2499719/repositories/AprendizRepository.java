@@ -13,13 +13,12 @@ import com.sena.adso2499719.adso2499719.entities.Aprendiz;
 @Repository
 public interface AprendizRepository extends JpaRepository<Aprendiz, Long> {
 
-	@Query(value="SELECT\r\n"
-			+ "A.id,\r\n"
-			+ "A.nombres,\r\n"
-			+ "A.apellidos,\r\n"
-			+ "Gr.nombre as grado\r\n"
-			+ "FROM aprendices AS A\r\n"
-			+ "INNER JOIN grados AS Gr ON Gr.id=A.grado_id\r\n"
-			+ "WHERE CONCAT(A.nombres,A.apellidos,Gr.nombre)LIKE CONCAT('%', :textobu,'%');")
-	Page<AprendizDataTableDto> getDataTable(Pageable pageable, @Param("textobu" )String textoBusqueda);
+	@Query(value="SELECT id,\r\n"
+			+ "nombres,\r\n"
+			+ " apellido,\r\n"
+			+ " Gr.nombre AS Grado\r\n"
+			+ " FROM aprendices\r\n"
+			+ " INNER JOIN grados AS Gr ON Gr.id=aprendices.grado_id "
+			+ "WHERE CONCAT(A.nombres,A.apellidos,Gr.nombre)LIKE CONCAT('%', :textobu,'%') ", nativeQuery = true)
+	Page<AprendizDataTableDto> getDataTable(Pageable pageable, @Param("textobu" ) String textoBusqueda);
 }
