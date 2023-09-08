@@ -22,5 +22,5 @@ public interface IAprendizService {
 	 
 	 List<Aprendiz>getAll();
 	 
-	 Optional<Aprendiz>getById(Long id);
+	 Aprendiz getById(Long id);
 }

@@ -49,9 +49,14 @@ public class MateriaService implements IMateriaService{
 	}
 
 	@Override
-	public Optional<Materia> getById(Long id) {
+	public Materia getById(Long id) {
+		Optional<Materia> materiaBDot=repository.findById(id);
+		if (materiaBDot.isEmpty()) {
+			return null;
+		}
+		Materia materiaBD=materiaBDot.get();
 		
-		return repository.findById(id);
+		return materiaBD;
 	}
 
 	@Override

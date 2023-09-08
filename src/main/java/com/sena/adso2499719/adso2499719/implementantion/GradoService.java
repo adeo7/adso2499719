@@ -53,8 +53,13 @@ public class GradoService implements IGradoService {
 	}
 
 	@Override
-	public Optional<Grado> getById(Long id) {
-		return repository.findById(id);
+	public Grado getById(Long id) {
+		Optional<Grado> gradoBdot= repository.findById(id);
+		if (gradoBdot.isEmpty()) {
+			return null;
+		}
+		Grado gradoBd=gradoBdot.get();
+		return gradoBd;
 	}
 
 	@Override

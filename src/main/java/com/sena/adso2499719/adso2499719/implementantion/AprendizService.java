@@ -45,6 +45,7 @@ public class AprendizService implements IAprendizService {
 
 	@Override
 	public void delete(Long id) {
+		
 		repository.deleteById(id);
 		
 	}
@@ -56,9 +57,14 @@ public class AprendizService implements IAprendizService {
 	}
 
 	@Override
-	public Optional<Aprendiz> getById(Long id) {
+	public Aprendiz getById(Long id) {
 		
-		return repository.findById(id);
+		Optional<Aprendiz>aprendizBDot=repository.findById(id);
+		if (aprendizBDot.isEmpty()) {
+			return null;
+		}
+		Aprendiz aprendizBD=aprendizBDot.get();
+		return aprendizBD;
 	}
 
 	@Override

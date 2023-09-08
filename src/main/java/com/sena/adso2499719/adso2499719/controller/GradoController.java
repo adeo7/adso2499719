@@ -57,6 +57,7 @@ public class GradoController {
 	
 	@GetMapping
 	public ResponseEntity<?>getAll(){
+		
 		return ResponseEntity.ok(service.getAll());
 	}
 	

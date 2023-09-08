@@ -53,8 +53,14 @@ public class ProfesorService implements IProfesorService{
 	}
 
 	@Override
-	public Optional<Profesor> getById(Long id) {
-		return repository.findById(id);
+	public Profesor getById(Long id) {
+		
+		Optional<Profesor>profesorBDot=repository.findById(id);
+		if (profesorBDot.isEmpty()) {
+			return null;
+		}
+		Profesor profesorBD=profesorBDot.get();
+		return profesorBD;
 	}
 
 	@Override

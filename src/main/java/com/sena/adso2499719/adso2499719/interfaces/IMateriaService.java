@@ -24,5 +24,5 @@ public interface IMateriaService {
 	 
 	 List<Materia>getAll();
 	 
-	 Optional<Materia>getById(Long id);
+	 Materia getById(Long id);
 }

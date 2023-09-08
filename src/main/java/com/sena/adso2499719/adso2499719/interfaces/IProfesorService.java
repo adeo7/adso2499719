@@ -23,5 +23,5 @@ public interface IProfesorService {
 	 
 	 List<Profesor>getAll();
 	 
-	 Optional<Profesor>getById(Long id);
+	 Profesor getById(Long id);
 }
