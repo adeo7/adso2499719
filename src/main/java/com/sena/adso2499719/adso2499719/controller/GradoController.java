@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,12 +21,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.sena.adso2499719.adso2499719.dtos.ApiResponseDto;
+import com.sena.adso2499719.adso2499719.entities.Aprendiz;
 import com.sena.adso2499719.adso2499719.entities.Grado;
 import com.sena.adso2499719.adso2499719.implementantion.GradoService;
 
 @RestController
 @RequestMapping("api/grado")
+@CrossOrigin("*")
 public class GradoController {
 
 	@Autowired
@@ -56,28 +59,72 @@ public class GradoController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<?>getAll(){
-		
-		return ResponseEntity.ok(service.getAll());
+	public ResponseEntity<ApiResponseDto<List<Grado>>>getAll(){
+		try {
+			return ResponseEntity.ok(
+					new ApiResponseDto<List<Grado>>("Datos obtenidos",true, service.getAll())
+							
+							);
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().body(
+					new ApiResponseDto<List<Grado>>(e.getMessage(),false, null)
+					);
+		}
 	}
 	
 	@GetMapping("{id}")
-	public ResponseEntity<?>getById(@PathVariable Long id){
-		return ResponseEntity.ok(service.getById(id));
+	public ResponseEntity<ApiResponseDto<Grado>>getById(@PathVariable Long id){
+		try {
+			return ResponseEntity.ok(
+					new ApiResponseDto<Grado>("Datos obtenidos",true, service.getById(id))
+					);
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().body(
+			new ApiResponseDto<Grado>(e.getMessage(),false, null)
+			);
+		}
+		
+		
 	}
 	
 	@PostMapping
-	public ResponseEntity<?>save(@RequestBody Grado grado){
-		return ResponseEntity.ok(service.save( grado));
+	public ResponseEntity<ApiResponseDto<Grado>>save(@RequestBody Grado grado){
+		try {
+			return ResponseEntity.ok(
+					new ApiResponseDto<Grado>("Datos guardados", true, service.save(grado)) 
+					);	
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().body(
+					new ApiResponseDto<Grado>(e.getMessage(), false, null) 
+					);
+		}
+		
 	}
 	@PutMapping("{id}")
-	public ResponseEntity<?>update(@PathVariable Long id, @RequestBody Grado grado){
-		service.update(id, grado);
-		return ResponseEntity.ok("grado actualizado");
+	public ResponseEntity<ApiResponseDto<Grado>>update(@PathVariable Long id, @RequestBody Grado grado){
+		try {
+			service.update(id, grado);
+			return ResponseEntity.ok(
+					new ApiResponseDto<Grado>("Datos actualizados", true,null)
+					);
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().body(
+					new ApiResponseDto<Grado>(e.getMessage(), false,null)
+					);
+		}
+		
 	}
 	@DeleteMapping("{id}")
-	public ResponseEntity<?>delete(@PathVariable Long id){
-		service.delete(id);
-		return ResponseEntity.ok("grado eliminado");
+	public ResponseEntity<ApiResponseDto<Grado>>delete(@PathVariable Long id){
+		try {
+			service.delete(id);
+			return ResponseEntity.ok(
+					new ApiResponseDto<Grado>("Datos eliminados", true,null)
+					);
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().body(
+					new ApiResponseDto<Grado>(e.getMessage(), false,null)
+					);
+		}
 	}
 }

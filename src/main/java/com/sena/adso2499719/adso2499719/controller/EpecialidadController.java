@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,14 +23,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sena.adso2499719.adso2499719.dtos.ApiResponseDto;
 import com.sena.adso2499719.adso2499719.entities.Especialidad;
+import com.sena.adso2499719.adso2499719.implementantion.EspecialidadServices;
 import com.sena.adso2499719.adso2499719.interfaces.IEspecialidadServices;
 
 @RestController
 @RequestMapping("api/especialidad")
+@CrossOrigin("*")
 public class EpecialidadController {
 
 	@Autowired
-	private IEspecialidadServices service;
+	private EspecialidadServices service;
 	
 	
 	@GetMapping("datatable")
@@ -64,8 +67,6 @@ public class EpecialidadController {
 		respuesta.setMessage("Datos obtenidos");
 		respuesta.setData(service.getAll());
 		try {
-			
-			
 			return ResponseEntity.ok(respuesta);	
 		} catch (Exception e) {
 			respuesta.setStatus(false);

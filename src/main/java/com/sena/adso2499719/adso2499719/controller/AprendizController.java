@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,7 @@ import com.sena.adso2499719.adso2499719.implementantion.AprendizService;
 
 @RestController
 @RequestMapping("api/aprendiz")
+@CrossOrigin("*")
 public class AprendizController {
 	
 	@Autowired
@@ -76,7 +78,6 @@ public class AprendizController {
 		try {
 			return ResponseEntity.ok(
 					new ApiResponseDto<Aprendiz>("Datos actualizados", true, service.getById(id))
-					// este error se coorigue en aprendiz service
 					);
 		} catch (Exception e) {
 			return ResponseEntity.internalServerError().body(
@@ -105,8 +106,18 @@ public class AprendizController {
 		
 	}
 	@DeleteMapping("{id}")
-	public ResponseEntity<?>delete(@PathVariable Long id){
-		service.delete(id);
-		return ResponseEntity.ok("aprendiz eliminado");
+	public ResponseEntity<ApiResponseDto<Aprendiz>>delete(@PathVariable Long id){
+		try {
+			service.delete(id);
+			return ResponseEntity.ok(
+					new ApiResponseDto<Aprendiz>("Datos actualizados", true, null)
+					);
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().body(
+					new ApiResponseDto<Aprendiz>(e.getMessage(), false, null)
+					);
+		}
+		
+		
 	}
 }
