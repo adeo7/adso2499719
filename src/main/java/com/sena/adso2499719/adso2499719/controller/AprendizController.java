@@ -88,8 +88,17 @@ public class AprendizController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?>save(@RequestBody Aprendiz aprendiz){
-		return ResponseEntity.ok(service.save(aprendiz));
+	public ResponseEntity<ApiResponseDto<Aprendiz>>save(@RequestBody Aprendiz aprendiz){
+		try {
+			return ResponseEntity.ok(
+					new ApiResponseDto<Aprendiz>("Datos Guardados", true, service.save(aprendiz))
+					);
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().body(
+					new ApiResponseDto<Aprendiz>(e.getMessage(), false,null)
+					);
+		}
+		
 	}
 	@PutMapping("{id}")
 	public ResponseEntity<ApiResponseDto<Aprendiz>>update(@PathVariable Long id, @RequestBody Aprendiz aprendiz){

@@ -27,7 +27,7 @@ import com.sena.adso2499719.adso2499719.implementantion.ProfesorService;
 
 
 @RestController
-@RequestMapping("api/profesor")
+@RequestMapping("api/profesores")
 @CrossOrigin("*")
 public class ProfesorController {
 	@Autowired 
