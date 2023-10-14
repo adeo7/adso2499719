@@ -14,15 +14,19 @@ public class ProfesorMateriaGrado {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@ManyToOne
 	@JoinColumn(name="grado_id", nullable=false )
 	private Grado grado;
+	
 	@ManyToOne
 	@JoinColumn(name="profesor_id", nullable=false )
 	private Profesor profesor;
+	
 	@ManyToOne
 	@JoinColumn(name="materia_id", nullable=false )
 	private Materia materia;
+	
 	public Long getId() {
 		return id;
 	}

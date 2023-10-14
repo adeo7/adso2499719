@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sena.adso2499719.adso2499719.dtos.ApiResponseDto;
+import com.sena.adso2499719.adso2499719.entities.Grado;
+import com.sena.adso2499719.adso2499719.entities.Materia;
 import com.sena.adso2499719.adso2499719.entities.Profesor;
 import com.sena.adso2499719.adso2499719.implementantion.ProfesorService;
 
@@ -32,6 +34,7 @@ import com.sena.adso2499719.adso2499719.implementantion.ProfesorService;
 public class ProfesorController {
 	@Autowired 
 	private ProfesorService service;
+
 	
 	@GetMapping("datatable")
 	public ResponseEntity<Page<?>>dataTable(@RequestParam(name= "page" )Integer page,
@@ -98,6 +101,8 @@ public class ProfesorController {
 		}
 		
 	}
+	
+	
 	@PutMapping("{id}")
 	public ResponseEntity<ApiResponseDto<Profesor>>update(@PathVariable Long id, @RequestBody Profesor profesor){
 		try {
@@ -124,4 +129,6 @@ public class ProfesorController {
 					);
 		}
 	}
+	
+	
 }
